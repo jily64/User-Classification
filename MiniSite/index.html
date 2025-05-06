@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Опрос</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: #150027; /* Темно-фиолетовый фон */
+            color: #fff; /* Белый текст */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 600px;
+        }
+
+        .question-box {
+            background-color: #260052; /* Более темный фиолетовый для коробок */
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 15px; /* Закругленные углы */
+            text-align: center;
+        }
+
+        .question {
+            font-size: 1.2em;
+            margin-bottom: 15px;
+        }
+
+        .answer-button {
+            background-color: #674179; /* Еще более темный фиолетовый для кнопок */
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .answer-button:hover {
+            background-color: #8e61a8; /* Цвет при наведении */
+        }
+
+        .answer-button.selected {
+          background-color: #a78ac1; /* Или любой другой цвет */
+        }
+
+
+        /* Дополнительные стили (необязательно, для улучшения внешнего вида) */
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        #results {
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Опрос</h1>
+
+        <div id="questions-container">
+            
+        </div>
+
+        <div id="results" style="display: none;">
+            <h2>Результаты:</h2>
+            <p id="results-text"></p>
+        </div>
+
+        <button onclick="calculateResults()" style="display:block; margin: 20px auto;">Показать результаты</button>
+    </div>
+
+    <script>
+        const questionsData = [
+            { question: "В кампании людей вы можете быть лидером?", answers: ["Да", "Нет"] },
+            { question: "Как вы хорошо взаимодействуете с незнакомыми людьми?", answers: ["Да", "Нет"] },
+            { question: "Вы активный человек или эмоциональный?", answers: ["Активный", "Эмоциональный"] },
+            { question: "Вы принимаете решения сами или отдаете это другому человеку?", answers: ["Да", "Нет"] }
+        ];
+
+        const questionsContainer = document.getElementById("questions-container");
+        const resultsDiv = document.getElementById("results");
+        const resultsText = document.getElementById("results-text");
+
+        let answers = [];
+
+        function createQuestionElement(questionData, index) {
+            const questionBox = document.createElement("div");
+            questionBox.classList.add("question-box");
+
+            const questionElement = document.createElement("div");
+            questionElement.classList.add("question");
+            questionElement.textContent = questionData.question;
+
+            questionBox.appendChild(questionElement);
+
+            questionData.answers.forEach((answerText, answerIndex) => {
+                const answerButton = document.createElement("button");
+                answerButton.classList.add("answer-button");
+                answerButton.textContent = answerText;
+                answerButton.addEventListener("click", () => recordAnswer(index, answerIndex));
+                questionBox.appendChild(answerButton);
+            });
+
+            return questionBox;
+        }
+
+        function recordAnswer(questionIndex, answerIndex) {
+            answers[questionIndex] = answerIndex;
+            console.log(`Ответ на вопрос ${questionIndex + 1}: ${questionsData[questionIndex].answers[answerIndex]}`);
+
+            const buttons = questionsContainer.children[questionIndex].querySelectorAll('.answer-button');
+            buttons.forEach(button => button.classList.remove('selected'));
+            buttons[answerIndex].classList.add('selected');
+        }
+
+        async function calculateResults() {
+            let positiveAnswers = "";
+            for (let i = 0; i < answers.length; i++) {
+                if (answers[i] === 0) {
+                    positiveAnswers = positiveAnswers + "1";
+                }
+                else {
+                    positiveAnswers = positiveAnswers + "0";
+
+                }
+                
+            }
+
+            const data = {
+                "email": "123@mail.ww",
+                "ans": positiveAnswers
+            }
+
+            console.log(JSON.stringify(data))
+
+            fetch("http://localhost:8000/rating/questionare/", {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)}
+            )
+            .then((response) => {
+                if (!response.ok) {
+                throw new Error("Network response was not ok");
+                }
+
+                return response.json();
+            })
+            .then((data) => resultsText.textContent = `Ваш психотип по результатам опроса: ${data["matched"]}`)
+            .catch((error) => console.error("Fetch error:", error));
+            
+            const percentage = (positiveAnswers / questionsData.length) * 100;
+            
+            resultsDiv.style.display = "block";
+        }
+
+
+        // Инициализация - создание вопросов
+        questionsData.forEach((question, index) => {
+            const questionElement = createQuestionElement(question, index);
+            questionsContainer.appendChild(questionElement);
+        });
+    </script>
+
+</body>
+</html>
