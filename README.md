@@ -194,7 +194,7 @@ async def get_results(user: models.OnlyUser):
 Для реализации теста мы можем написать мини-сайт, для того чтобы показать как это будет работать.
 Вот так выглядит готовый опрос (код в папке *MiniSite*)
 
-![[Снимок экрана 2025-05-06 190754.png]]
+![](https://github.com/jily64/User-Classification/blob/main/res/quest.png)
 
 # Типизация
 ## Типизация игр и игроков
@@ -250,6 +250,6 @@ async def get_results(user: models.OnlyUser):
 
 # Licence
 
-<img src="https://developer.valvesoftware.com/w/images/e/e9/Logo-gpl.png"width="150" >
+![](i"https://developer.valvesoftware.com/w/images/e/e9/Logo-gpl.png)
 [GNU GPLv3](https://choosealicense.com/licenses/gpl-3.0/)
 Copyright by [jily64](https://github.com/jily64)
