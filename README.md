@@ -255,4 +255,4 @@ async def get_results(user: models.OnlyUser):
 ![](https://developer.valvesoftware.com/w/images/e/e9/Logo-gpl.png)
 
 [GNU GPLv3](https://choosealicense.com/licenses/gpl-3.0/)
-Copyright by [jily64](https://github.com/jily64)
+Made by [jily64](https://github.com/jily64) and [Matvey Merzlikin](https://github.com/Merzlikin-Matvey)
