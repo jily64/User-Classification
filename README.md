@@ -283,4 +283,4 @@ async def get_results(user: models.OnlyUser):
 Made by [jily64](https://github.com/jily64) and [Matvey Merzlikin](https://github.com/Merzlikin-Matvey)
 
 # PS
-![]([https://files.rsdn.org/27918/ArtLebDesk.jpg)
+![](https://github.com/jily64/User-Classification/blob/main/res/ArtLebDesk.jpg?raw=true)
