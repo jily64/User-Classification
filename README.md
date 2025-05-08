@@ -283,4 +283,4 @@ async def get_results(user: models.OnlyUser):
 Made by [jily64](https://github.com/jily64) and [Matvey Merzlikin](https://github.com/Merzlikin-Matvey)
 
 # PS
-![]([https://developer.valvesoftware.com/w/images/e/e9/Logo-gpl.png](https://avatars.dzeninfra.ru/get-zen_doc/1930771/pub_5f23ca28b85040691cf89c4c_5f23cb2efcc9586a4d350d45/scale_1200))
+![]([https://files.rsdn.org/27918/ArtLebDesk.jpg)
